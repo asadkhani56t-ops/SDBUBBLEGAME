@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#142d50">
+  <title>SDBUBBLESGAME</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game">
+    <header>
+      <h1>💎 SD BUBBLE GAME</h1>
+      <p>Match the bubbles and win!</p>
+    </header>
+
+    <section class="stats">
+      <div>Score <strong id="score">0</strong></div>
+      <div>Moves <strong id="moves">30</strong></div>
+      <div>Level <strong id="level">1</strong></div>
+    </section>
+
+    <div id="board"></div>
+    <button id="restart">New Game</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
