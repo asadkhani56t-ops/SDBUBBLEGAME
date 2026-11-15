@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,25 +22,36 @@
     <main>
       <section class="screen active" id="homeScreen">
         <div class="hero">
-          <div class="hero-orb orb-a"></div><div class="hero-orb orb-b"></div>
+          <div class="hero-orb orb-a"></div>
+          <div class="hero-orb orb-b"></div>
           <div class="hero-copy">
             <p class="eyebrow">A colorful puzzle adventure</p>
             <h1>POP. MATCH.<br><span>LEVEL UP!</span></h1>
             <p>Swap the bubbles, make combos and conquer the puzzle trail.</p>
-            <button class="primary-btn" id="playBtn">PLAY NOW <span>➜</span></button>
+            <button class="primary-btn" id="playBtn" onclick="window.location.href='game.html'">PLAY NOW <span>➜</span></button>
           </div>
           <div class="hero-bubbles" aria-hidden="true">
-            <i class="bubble b1">✦</i><i class="bubble b2">●</i><i class="bubble b3">◆</i>
-            <i class="bubble b4">✚</i><i class="bubble b5">●</i>
+            <i class="bubble b1">✦</i>
+            <i class="bubble b2">●</i>
+            <i class="bubble b3">◆</i>
+            <i class="bubble b4">✚</i>
+            <i class="bubble b5">●</i>
           </div>
         </div>
+
         <div class="home-stats">
           <div class="stat-card"><span>🏆</span><small>BEST SCORE</small><b id="bestScore">0</b></div>
           <div class="stat-card"><span>🧩</span><small>LEVEL</small><b id="homeLevel">1</b></div>
           <div class="stat-card"><span>❤️</span><small>LIVES</small><b id="homeLives">5</b></div>
         </div>
-        <div class="section-heading"><div><small>YOUR ADVENTURE</small><h2>Bubble journey</h2></div><span class="level-chip" id="progressLabel">1 / 500</span></div>
+
+        <div class="section-heading">
+          <div><small>YOUR ADVENTURE</small><h2>Bubble journey</h2></div>
+          <span class="level-chip" id="progressLabel">1 / 500</span>
+        </div>
+
         <div class="progress-track"><div id="progressBar"></div></div>
+
         <div class="home-actions">
           <button class="secondary-btn" id="levelsBtn">🗺️ Level map</button>
           <button class="secondary-btn" id="dailyBtn">🎁 Daily gift</button>
@@ -53,34 +65,67 @@
           <div><small>PUZZLE LEVEL</small><h2 id="levelTitle">Level 1</h2></div>
           <button class="icon-btn" id="pauseBtn">Ⅱ</button>
         </div>
+
         <div class="mission-card">
           <div><small>YOUR TARGET</small><strong id="goalText">Score 500</strong></div>
           <div class="moves-box"><small>MOVES LEFT</small><b id="movesLeft">20</b></div>
         </div>
-        <div class="score-row"><span>⭐ <b id="scoreNow">0</b></span><span>BEST <b id="scoreBest">0</b></span></div>
-        <div class="board-wrap"><div class="board" id="board" role="grid" aria-label="Bubble match puzzle board"></div></div>
+
+        <div class="score-row">
+          <span>⭐ <b id="scoreNow">0</b></span>
+          <span>BEST <b id="scoreBest">0</b></span>
+        </div>
+
+        <div class="board-wrap">
+          <div class="board" id="board" role="grid" aria-label="Bubble match puzzle board"></div>
+        </div>
+
         <div class="booster-row">
           <button class="booster" data-boost="shuffle"><span>🔀</span><b>Shuffle</b><small>Free</small></button>
           <button class="booster" data-boost="hammer"><span>🔨</span><b>Pop one</b><small id="hammerCount">3</small></button>
           <button class="booster" data-boost="color"><span>🌈</span><b>Rainbow</b><small id="rainbowCount">2</small></button>
         </div>
+
         <p class="hint" id="hintText">Swap two neighboring bubbles to match 3 or more.</p>
       </section>
 
       <section class="screen" id="levelsScreen">
-        <div class="subpage-head"><button class="back-btn" data-back>←</button><div><small>EXPLORE THE TRAIL</small><h2>Level map</h2></div></div>
-        <div class="map-banner"><span>🌌</span><div><b>Bubble Galaxy</b><small>500 puzzles waiting for you</small></div></div>
+        <div class="subpage-head">
+          <button class="back-btn" data-back>←</button>
+          <div><small>EXPLORE THE TRAIL</small><h2>Level map</h2></div>
+        </div>
+        <div class="map-banner">
+          <span>🌌</span>
+          <div><b>Bubble Galaxy</b><small>500 puzzles waiting for you</small></div>
+        </div>
         <div class="level-grid" id="levelGrid"></div>
       </section>
 
       <section class="screen" id="settingsScreen">
-        <div class="subpage-head"><button class="back-btn" data-back>←</button><div><small>MAKE IT YOURS</small><h2>Settings</h2></div></div>
+        <div class="subpage-head">
+          <button class="back-btn" data-back>←</button>
+          <div><small>MAKE IT YOURS</small><h2>Settings</h2></div>
+        </div>
+
         <div class="settings-card">
-          <div class="setting-line"><div><b>Game sound</b><small>Music and effects</small></div><button class="toggle on" id="soundToggle">ON</button></div>
-          <div class="setting-line"><div><b>Vibration</b><small>Touch feedback (where supported)</small></div><button class="toggle on" id="vibeToggle">ON</button></div>
-          <div class="setting-line"><div><b>Player name</b><small id="playerName">Bubble Player</small></div><button class="small-action" id="nameBtn">EDIT</button></div>
+          <div class="setting-line">
+            <div><b>Game sound</b><small>Music and effects</small></div>
+            <button class="toggle on" id="soundToggle">ON</button>
+          </div>
+
+          <div class="setting-line">
+            <div><b>Vibration</b><small>Touch feedback (where supported)</small></div>
+            <button class="toggle on" id="vibeToggle">ON</button>
+          </div>
+
+          <div class="setting-line">
+            <div><b>Player name</b><small id="playerName">Bubble Player</small></div>
+            <button class="small-action" id="nameBtn">EDIT</button>
+          </div>
+
           <button class="danger-btn" id="resetBtn">Reset local game progress</button>
         </div>
+
         <p class="fine-print">Your progress is saved on this device. Online accounts and global leaderboards need a secure game server and are not enabled in this starter build.</p>
       </section>
     </main>
@@ -100,6 +145,7 @@
       <div class="modal-actions" id="modalActions"></div>
     </div>
   </div>
+
   <script src="game.js"></script>
 </body>
 </html>
