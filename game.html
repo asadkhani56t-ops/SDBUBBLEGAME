@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SDBUBBLESGAME - Play</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  padding:15px;
+  background:linear-gradient(135deg,#07152e,#174879);
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
+}
+h1{color:#65e5ff}
+.stats{
+  display:flex;
+  justify-content:space-around;
+  padding:15px;
+  background:#ffffff20;
+  border-radius:15px;
+}
+.stats strong{display:block;color:#ffe66d;font-size:22px;margin-top:6px}
+#board{
+  max-width:420px;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:5px;
+}
+.bubble{
+  aspect-ratio:1;
+  border:2px solid #ffffff55;
+  border-radius:12px;
+  background:#244d80;
+  font-size:clamp(17px,5vw,28px);
+  padding:0;
+}
+.bubble.selected{outline:3px solid white}
+button.action{
+  padding:13px 25px;
+  border:0;
+  border-radius:25px;
+  background:#ffe66d;
+  color:#142d50;
+  font-weight:bold;
+  font-size:17px;
+  margin:8px;
+}
+</style>
+</head>
+<body>
+
+<h1>💎 SDBUBBLESGAME</h1>
+<p>Match three or more bubbles!</p>
+
+<div class="stats">
+  <div>Score<strong id="score">0</strong></div>
+  <div>Moves<strong id="moves">30</strong></div>
+  <div>Level<strong id="level">1</strong></div>
+</div>
+
+<div id="board"></div>
+
+<button class="action" id="restart">Restart Game</button>
+<button class="action" onclick="location.href='index.html'">Home</button>
+
+<script>
+const board=document.getElementById("board");
+const scoreBox=document.getElementById("score");
+const movesBox=document.getElementById("moves");
+const types=["🔴","🔵","🟢","🟡","🟣","🟠"];
+let grid=[],score=0,moves=30,selected=null,busy=false;
+
+function random(){
+ return types[Math.floor(Math.random()*types.length)];
+}
+
+function create(){
+ grid=Array.from({length:8},()=>Array.from({length:8},random));
+ score=0;moves=30;selected=null;
+ draw();
+}
+
+function draw(){
+ board.innerHTML="";
+ grid.forEach((row,r)=>row.forEach((value,c)=>{
+  const b=document.createElement("button");
+  b.className="bubble";
+  b.textContent=value;
+  if(selected&&selected.r===r&&selected.c===c)b.classList.add("selected");
+  b.onclick=()=>choose(r,c);
+  board.appendChild(b);
+ }));
+ scoreBox.textContent=score;
+ movesBox.textContent=moves;
+}
+
+function find(){
+ let set=new Set();
+ for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+  if(c<6&&grid[r][c]===grid[r][c+1]&&grid[r][c]===grid[r][c+2]){
+   let k=c;while(k<8&&grid[r][k]===grid[r][c])set.add(r+","+k++);
+  }
+  if(r<6&&grid[r][c]===grid[r+1][c]&&grid[r][c]===grid[r+2][c]){
+   let k=r;while(k<8&&grid[k][c]===grid[r][c])set.add(k+++","+c);
+  }
+ }
+ return [...set].map(x=>x.split(",").map(Number));
+}
+
+function choose(r,c){
+ if(busy||moves<=0)return;
+ if(!selected){selected={r,c};draw();return;}
+ const old=selected;selected=null;
+ if(Math.abs(old.r-r)+Math.abs(old.c-c)!==1){selected={r,c};draw();return;}
+ [grid[r][c],grid[old.r][old.c]]=[grid[old.r][old.c],grid[r][c]];
+ const matches=find();
+ if(!matches.length){
+  [grid[r][c],grid[old.r][old.c]]=[grid[old.r][old.c],grid[r][c]];
+  draw();return;
+ }
+ moves--;clearMatches();
+}
+
+function clearMatches(){
+ busy=true;
+ let matches=find();
+ while(matches.length){
+  score+=matches.length*10;
+  matches.forEach(([r,c])=>grid[r][c]=null);
+  for(let c=0;c<8;c++){
+   let col=grid.map(row=>row[c]).filter(x=>x!==null);
+   while(col.length<8)col.unshift(random());
+   for(let r=0;r<8;r++)grid[r][c]=col[r];
+  }
+  matches=find();
+ }
+ draw();busy=false;
+ if(moves===0)alert("Game Over! Score: "+score);
+}
+
+document.getElementById("restart").onclick=create;
+create();
+</script>
+</body>
+  </html>
+  
